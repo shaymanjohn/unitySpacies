@@ -19,7 +19,7 @@ public class FleetController : MonoBehaviour
     private FleetState state;
     private FleetDirection direction;
     private GameObject[] fleet = new GameObject[alienRows * alienColumns];
-    
+
     private int fleetIndex = 0;
     private int fleetRevealCounter = 0;
     private int pauseCounter;
@@ -27,6 +27,8 @@ public class FleetController : MonoBehaviour
     private float minX = 0;
     private float maxX = 0;
     private float minY = 0;
+
+    private bool walk = true;
 
     private enum FleetState {
         InitialiseFleet,
@@ -42,7 +44,7 @@ public class FleetController : MonoBehaviour
         DownLeft,
         RightToLeft
     }
-    
+
     void Start()
     {
         state = FleetState.InitialiseFleet;
@@ -70,7 +72,7 @@ public class FleetController : MonoBehaviour
 
             case FleetState.FleetLanded:
                 break;
-        }   
+        }
     }
 
     private void initialiseFleet() {
@@ -79,7 +81,7 @@ public class FleetController : MonoBehaviour
             float alienX = (x * 1.2f) - 9;
             GameObject top  = Instantiate(topAlien, new Vector2(alienX, 5), new Quaternion(0, 0, 0, 0));
             GameObject mid1 = Instantiate(midAlien, new Vector2(alienX, 4), new Quaternion(0, 0, 0, 0));
-            GameObject mid2 = Instantiate(midAlien, new Vector2(alienX, 3), new Quaternion(0, 0, 0, 0));            
+            GameObject mid2 = Instantiate(midAlien, new Vector2(alienX, 3), new Quaternion(0, 0, 0, 0));
             GameObject bot1 = Instantiate(botAlien, new Vector2(alienX, 2), new Quaternion(0, 0, 0, 0));
             GameObject bot2 = Instantiate(botAlien, new Vector2(alienX, 1), new Quaternion(0, 0, 0, 0));
 
@@ -114,16 +116,18 @@ public class FleetController : MonoBehaviour
         if (fleetIndex == fleet.Length) {
             fleetIndex = 0;
             state = FleetState.MoveFleet;
-        }        
+        }
     }
 
     private void moveFleet() {
         GameObject alien = fleet[fleetIndex];
+        Animator animator = alien.GetComponent<Animator>();
+        animator.SetBool("walk", walk);
         float currentX = alien.transform.position.x;
         float currentY = alien.transform.position.y;
 
         switch (direction) {
-            case FleetDirection.LeftToRight:                
+            case FleetDirection.LeftToRight:
                 alien.transform.position = new Vector2(currentX + xSpeed, currentY);
                 break;
 
@@ -152,12 +156,13 @@ public class FleetController : MonoBehaviour
         fleetIndex++;
         if (fleetIndex == fleet.Length) {
             fleetIndex = 0;
+            walk = !walk;
 
             if (changeDirection()) {
                 switch (direction) {
                     case FleetDirection.LeftToRight:
                         direction = FleetDirection.DownRight;
-                        break;                    
+                        break;
 
                     case FleetDirection.DownLeft:
                         direction = FleetDirection.LeftToRight;
@@ -169,15 +174,15 @@ public class FleetController : MonoBehaviour
 
                     case FleetDirection.RightToLeft:
                         direction = FleetDirection.DownLeft;
-                        break;                    
-                }        
+                        break;
+                }
                 if (minY < -3) {
                     state = FleetState.FleetLanded;
                 }
 
                 minX = 0;
                 maxX = 0;
-                minY = 0;                
+                minY = 0;
             }
 
             if (state != FleetState.FleetLanded) {
