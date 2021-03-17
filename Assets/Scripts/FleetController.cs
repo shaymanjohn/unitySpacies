@@ -8,8 +8,6 @@ public class FleetController : MonoBehaviour
     public GameObject midAlien;
     public GameObject botAlien;
 
-    public int testValue = 19;
-
     private const int alienRows = 5;
     private const int alienColumns = 11;
     private const int alienRevealDelay = 2;
