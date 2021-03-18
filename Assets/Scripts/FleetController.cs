@@ -32,7 +32,7 @@ public class FleetController : MonoBehaviour
         InitialiseFleet,
         RevealFleet,
         MoveFleet,
-        PauseFleet,
+        MoveFleetDelay,
         FleetLanded
     }
 
@@ -43,14 +43,12 @@ public class FleetController : MonoBehaviour
         RightToLeft
     }
 
-    void Start()
-    {
+    void Start() {
         state = FleetState.InitialiseFleet;
         direction = FleetDirection.LeftToRight;
     }
 
-    void Update()
-    {
+    void FixedUpdate() {
         switch (state) {
             case FleetState.InitialiseFleet:
                 initialiseFleet();
@@ -64,8 +62,8 @@ public class FleetController : MonoBehaviour
                 moveFleet();
                 break;
 
-            case FleetState.PauseFleet:
-                pauseFleet();
+            case FleetState.MoveFleetDelay:
+                delayFleetMove();
                 break;
 
             case FleetState.FleetLanded:
@@ -184,13 +182,13 @@ public class FleetController : MonoBehaviour
             }
 
             if (state != FleetState.FleetLanded) {
-                pauseCounter = 16;
-                state = FleetState.PauseFleet;
+                pauseCounter = 30;
+                state = FleetState.MoveFleetDelay;
             }
         }
     }
 
-    private void pauseFleet() {
+    private void delayFleetMove() {
         pauseCounter--;
         if (pauseCounter == 0) {
             state = FleetState.MoveFleet;

@@ -4,27 +4,39 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private Transform player;
+    public GameObject playerObject;
     public float minBound;
     public float maxBound;
     public float speed;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        player = GetComponent<Transform>();
+    private GameObject player;
+    private int playerStartDelay = 180;
+    
+    void Start() {
+        player = Instantiate(playerObject, new Vector2(-8, -6), new Quaternion(0, 0, 0, 0));
+        player.SetActive(false);
     }
 
-    void FixedUpdate()
-    {
-        float horizontalInput = Input.GetAxis("Horizontal");
-
-        if (player.position.x < minBound && horizontalInput < 0) {
-            return;
-        } else if (player.position.x > maxBound && horizontalInput > 0) {
+    void FixedUpdate() {
+        if (playerStartDelay > 0) {
+            playerStartDelay--;
+            if (playerStartDelay == 0) {                
+                player.SetActive(true);
+            }
             return;
         }
 
-        player.position += Vector3.right * horizontalInput * speed;
+        float horizontalInput = Input.GetAxis("Horizontal");
+        Vector3 position = player.transform.position;
+        
+        if (position.x < minBound && horizontalInput < 0) {
+            return;
+        }
+        
+        if (position.x > maxBound && horizontalInput > 0) {
+            return;
+        }
+
+        player.transform.position += Vector3.right * horizontalInput * speed;
     }
 }
