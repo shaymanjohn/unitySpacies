@@ -161,7 +161,7 @@ public class FleetController : MonoBehaviour
                         break;
 
                     case FleetDirection.DownLeft:
-                        direction = FleetDirection.LeftToRight;
+                        direction = FleetDirection.LeftToRight;                        
                         break;
 
                     case FleetDirection.DownRight:
@@ -172,6 +172,7 @@ public class FleetController : MonoBehaviour
                         direction = FleetDirection.DownLeft;
                         break;
                 }
+
                 if (minY < -3) {
                     state = FleetState.FleetLanded;
                 }
