@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour {
     private GameObject bullet;
     private int playerStartDelay = 180;
     private bool firing = false;
+    private float bulletSpeed = 0.15f;
     
     void Start() {
         player = Instantiate(playerObject, new Vector2(-8, -6), new Quaternion(0, 0, 0, 0));
@@ -28,7 +29,7 @@ public class PlayerController : MonoBehaviour {
             bullet.transform.position = new Vector2(player.transform.position.x + 0.6f, player.transform.position.y + 0.6f);
             checkFire();
         } else {
-            bullet.transform.position = new Vector2(bullet.transform.position.x, bullet.transform.position.y + 0.12f);
+            bullet.transform.position = new Vector2(bullet.transform.position.x, bullet.transform.position.y + bulletSpeed);
             if (bullet.transform.position.y > 6.5) {
                 firing = false;
             }
