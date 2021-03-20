@@ -25,8 +25,14 @@ public class PlayerController : MonoBehaviour {
 
     void Update() {
         if (!firing) {
-            bullet.transform.position = new Vector2(player.transform.position.x + 0.6f, player.transform.position.y + 0.6f);        
-        }
+            bullet.transform.position = new Vector2(player.transform.position.x + 0.6f, player.transform.position.y + 0.6f);
+            checkFire();
+        } else {
+            bullet.transform.position = new Vector2(bullet.transform.position.x, bullet.transform.position.y + 0.12f);
+            if (bullet.transform.position.y > 6.5) {
+                firing = false;
+            }
+        }        
     }
 
     void FixedUpdate() {
@@ -50,6 +56,12 @@ public class PlayerController : MonoBehaviour {
             return;
         }
 
-        player.transform.position += Vector3.right * horizontalInput * speed;
+        player.transform.position += Vector3.right * horizontalInput * speed;        
+    }
+
+    private void checkFire() {
+        if (!firing && Input.GetKeyDown(KeyCode.Space)) {
+            firing = true;
+        }
     }
 }
