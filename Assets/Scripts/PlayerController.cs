@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void checkFire() {
-        if (!firing && Input.GetKeyDown(KeyCode.Space)) {
+        if (bullet.activeSelf && Input.GetKey(KeyCode.Space)) {
             firing = true;
         }
     }
