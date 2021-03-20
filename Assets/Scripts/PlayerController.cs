@@ -2,19 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
-{
+public class PlayerController : MonoBehaviour {
     public GameObject playerObject;
+    public GameObject playerBullet;
+
     public float minBound;
     public float maxBound;
     public float speed;
 
     private GameObject player;
+    private GameObject bullet;
     private int playerStartDelay = 180;
+    private bool firing = false;
     
     void Start() {
         player = Instantiate(playerObject, new Vector2(-8, -6), new Quaternion(0, 0, 0, 0));
         player.SetActive(false);
+
+        bullet = Instantiate(playerBullet);
+        bullet.SetActive(false);
+    }
+
+    void Update() {
+        if (!firing) {
+            bullet.transform.position = new Vector2(player.transform.position.x + 0.6f, player.transform.position.y + 0.6f);        
+        }
     }
 
     void FixedUpdate() {
@@ -22,6 +34,7 @@ public class PlayerController : MonoBehaviour
             playerStartDelay--;
             if (playerStartDelay == 0) {                
                 player.SetActive(true);
+                bullet.SetActive(true);
             }
             return;
         }

@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FleetController : MonoBehaviour
-{
+public class FleetController : MonoBehaviour {
     public GameObject topAlien;
     public GameObject midAlien;
     public GameObject botAlien;
@@ -75,7 +74,7 @@ public class FleetController : MonoBehaviour
         int objectIndex = 0;
         for (float x = 0; x < alienColumns; x += 1) {
             float alienX = (x * 1.2f) - 9;
-            GameObject top  = Instantiate(topAlien, new Vector2(alienX, 5), new Quaternion(0, 0, 0, 0));
+            GameObject top  = Instantiate(topAlien, new Vector2(alienX + 0.1f, 5), new Quaternion(0, 0, 0, 0));
             GameObject mid1 = Instantiate(midAlien, new Vector2(alienX, 4), new Quaternion(0, 0, 0, 0));
             GameObject mid2 = Instantiate(midAlien, new Vector2(alienX, 3), new Quaternion(0, 0, 0, 0));
             GameObject bot1 = Instantiate(botAlien, new Vector2(alienX, 2), new Quaternion(0, 0, 0, 0));
