@@ -60,6 +60,22 @@ public class PlayerController : MonoBehaviour {
         player.transform.position += Vector3.right * horizontalInput * speed;        
     }
 
+    void OnTriggerEnter2D(Collider2D other) {
+        if (other.tag == "Alien") {
+            firing = false;
+            GameManager.log("Hit alien");        
+        }
+        GameManager.log("OTE2D dude");
+    }
+
+    void OnTriggerEnter(Collider other) {
+        if (other.tag == "Alien") {
+            firing = false;
+            GameManager.log("Hit alien");
+        }        
+        GameManager.log("OTE dude");
+    }
+
     private void checkFire() {
         if (bullet.activeSelf && Input.GetKey(KeyCode.Space)) {
             firing = true;

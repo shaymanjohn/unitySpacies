@@ -71,7 +71,9 @@ public class FleetController : MonoBehaviour {
     }
 
     private void initialiseFleet() {
-        int objectIndex = 0;
+        // botAlien.GetComponent<Rigidbody>().useGravity = false;
+
+        int objectIndex = 0;        
         for (float x = 0; x < alienColumns; x += 1) {
             float alienX = (x * 1.2f) - 9;
             GameObject top  = Instantiate(topAlien, new Vector2(alienX + 0.1f, 5), new Quaternion(0, 0, 0, 0));
