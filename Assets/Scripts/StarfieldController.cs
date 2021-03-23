@@ -18,7 +18,7 @@ public class StarfieldController : MonoBehaviour {
         }
     }
 
-    void Update() {
+    void Update() {        
         for (int ix = 0; ix < stars.Length; ix++) {
             stars[ix].move();        
         }

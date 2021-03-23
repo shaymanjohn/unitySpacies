@@ -44,7 +44,6 @@ public class FleetController : MonoBehaviour {
 
     void Start() {
         state = FleetState.InitialiseFleet;
-        direction = FleetDirection.LeftToRight;
     }
 
     void FixedUpdate() {
@@ -93,6 +92,7 @@ public class FleetController : MonoBehaviour {
             fleet[ix].SetActive(false);
         }
 
+        direction = FleetDirection.LeftToRight;
         fleetIndex = 0;
         state = FleetState.RevealFleet;
         GameManager.log("Fleet initialised");
@@ -130,7 +130,7 @@ public class FleetController : MonoBehaviour {
         }
 
         if (alien == null) {
-            GameManager.log("All aliens dead");
+            state = FleetState.InitialiseFleet;
             return;
         }
 
