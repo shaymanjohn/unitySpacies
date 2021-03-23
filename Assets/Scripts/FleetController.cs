@@ -88,8 +88,8 @@ public class FleetController : MonoBehaviour {
             objectIndex++;
         }
 
-        for (int ix = 0; ix < fleet.Length; ix++) {
-            fleet[ix].SetActive(false);
+        foreach (GameObject alien in fleet) {
+            alien.SetActive(false);
         }
 
         direction = FleetDirection.LeftToRight;
