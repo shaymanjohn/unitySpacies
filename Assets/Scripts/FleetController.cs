@@ -70,9 +70,19 @@ public class FleetController : MonoBehaviour {
         }
     }
 
-    private void initialiseFleet() {
-        // botAlien.GetComponent<Rigidbody>().useGravity = false;
+    void OnTriggerEnter2D(Collider2D other) {
+        GameManager.log("OTE2D fc dude");
+    }
 
+    void OnTriggerEnter(Collider other) {
+        GameManager.log("OTE fc dude");
+    }
+
+    void OnCollisionEnter2D(Collision2D collision) {
+        GameManager.log("oce2d");
+    }
+
+    private void initialiseFleet() {
         int objectIndex = 0;        
         for (float x = 0; x < alienColumns; x += 1) {
             float alienX = (x * 1.2f) - 9;

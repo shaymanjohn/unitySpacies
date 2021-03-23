@@ -60,6 +60,10 @@ public class PlayerController : MonoBehaviour {
         player.transform.position += Vector3.right * horizontalInput * speed;        
     }
 
+    void OnCollisionEnter2D(Collision2D collision) {
+        GameManager.log("oce2d");
+    }
+
     void OnTriggerEnter2D(Collider2D other) {
         if (other.tag == "Alien") {
             firing = false;
