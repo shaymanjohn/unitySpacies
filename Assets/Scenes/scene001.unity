@@ -237,7 +237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerObject: {fileID: 3611070598462416029, guid: 97268ef972a994f2683b863c959bb6da, type: 3}
-  playerBullet: {fileID: 7593480236322084704, guid: 5f44be891524b42f4a0671c8e33418cf, type: 3}
+  bulletObject: {fileID: 7593480236322084704, guid: 5f44be891524b42f4a0671c8e33418cf, type: 3}
   minBound: -12
   maxBound: 12
   speed: 0.12
