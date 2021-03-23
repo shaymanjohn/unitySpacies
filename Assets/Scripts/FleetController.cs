@@ -70,18 +70,6 @@ public class FleetController : MonoBehaviour {
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other) {
-        GameManager.log("OTE2D fc dude");
-    }
-
-    void OnTriggerEnter(Collider other) {
-        GameManager.log("OTE fc dude");
-    }
-
-    void OnCollisionEnter2D(Collision2D collision) {
-        GameManager.log("oce2d");
-    }
-
     private void initialiseFleet() {
         int objectIndex = 0;        
         for (float x = 0; x < alienColumns; x += 1) {
@@ -127,7 +115,25 @@ public class FleetController : MonoBehaviour {
     }
 
     private void moveFleet() {
-        GameObject alien = fleet[fleetIndex];
+        GameObject alien = null;
+
+        for (int ix = 0; ix < fleet.Length; ix++) {
+            if (fleet[fleetIndex] != null) {
+                alien = fleet[fleetIndex];
+                break;                
+            } else {
+                fleetIndex++;
+                if (fleetIndex == fleet.Length) {
+                    fleetIndex = 0;
+                }
+            }
+        }
+
+        if (alien == null) {
+            GameManager.log("All aliens dead");
+            return;
+        }
+
         Animator animator = alien.GetComponent<Animator>();
         animator.SetBool("walk", walk);
         float currentX = alien.transform.position.x;
