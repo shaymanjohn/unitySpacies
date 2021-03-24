@@ -119,7 +119,6 @@ public class FleetController : MonoBehaviour {
 
         GameObject lastAlien = lastAlienInFleet();
         if (lastAlien == null) {
-            GameManager.log("no more aliens");
             state = FleetState.InitialiseFleet;
             return;
         }
