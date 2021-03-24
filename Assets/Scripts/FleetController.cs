@@ -212,7 +212,7 @@ public class FleetController : MonoBehaviour {
             }
 
             if (state != FleetState.FleetLanded) {
-                pauseCounter = remainingAlienCount;
+                pauseCounter = remainingAlienCount > 40 ? 40 : remainingAlienCount;
                 state = FleetState.MoveFleetDelay;
             }
         }
@@ -261,7 +261,7 @@ public class FleetController : MonoBehaviour {
             return true;
         }
 
-        if (direction == FleetDirection.LeftToRight && maxX > (GameManager.boundsRect.xMax - 4.0f)) {
+        if (direction == FleetDirection.LeftToRight && maxX > (GameManager.boundsRect.xMax - 5.0f)) {
             return true;
         }
 

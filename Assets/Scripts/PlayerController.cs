@@ -35,11 +35,11 @@ public class PlayerController : MonoBehaviour {
         float horizontalInput = Input.GetAxis("Horizontal");
         Vector3 position = player.transform.position;
         
-        if (position.x < (GameManager.boundsRect.xMin + 2.0f) && horizontalInput < 0) {
+        if (position.x < (GameManager.boundsRect.xMin + 4.0f) && horizontalInput < 0) {
             return;
         }
         
-        if (position.x > (GameManager.boundsRect.xMax - 4.0f) && horizontalInput > 0) {
+        if (position.x > (GameManager.boundsRect.xMax - 4.0f - 1.0f) && horizontalInput > 0) {
             return;
         }
 
