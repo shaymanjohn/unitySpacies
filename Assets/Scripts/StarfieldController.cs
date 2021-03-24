@@ -12,7 +12,7 @@ public class StarfieldController : MonoBehaviour {
     void Start() {
         int index = 0;
         for (int ix = 0; ix < numberOfStarsPerLayer; ix++) {
-            stars[index++] = new Star(starObject, new Color(0.5f, 0.3f, 0.5f, 1.0f), slowestStarSpeed, 0.8f);
+            stars[index++] = new Star(starObject, new Color(0.5f, 0.3f, 0.5f, 1.0f), slowestStarSpeed * 1.0f, 0.8f);
             stars[index++] = new Star(starObject, new Color(0.3f, 0.5f, 0.5f, 1.0f), slowestStarSpeed * 2.0f, 1.0f);
             stars[index++] = new Star(starObject, new Color(0.7f, 0.7f, 0.7f, 1.0f), slowestStarSpeed * 3.0f, 1.2f);
         }

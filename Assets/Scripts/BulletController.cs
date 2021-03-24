@@ -5,7 +5,7 @@ using UnityEngine;
 public class BulletController : MonoBehaviour
 {
     void OnTriggerEnter2D(Collider2D other) {
-        if (other.tag == "Alien") {
+        if (other.tag == GameManager.tagAlien) {
             Destroy(other.gameObject);
             Destroy(gameObject);
         }

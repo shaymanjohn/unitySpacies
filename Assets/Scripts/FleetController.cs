@@ -117,58 +117,69 @@ public class FleetController : MonoBehaviour {
     private void moveFleet() {
         GameObject alien = null;
 
-        for (int ix = 0; ix < fleet.Length; ix++) {
-            if (fleet[fleetIndex] != null) {
-                alien = fleet[fleetIndex];
-                break;                
-            } else {
-                fleetIndex++;
-                if (fleetIndex == fleet.Length) {
-                    fleetIndex = 0;
-                }
-            }
-        }
-
-        if (alien == null) {
+        GameObject lastAlien = lastAlienInFleet();
+        if (lastAlien == null) {
+            GameManager.log("no more aliens");
             state = FleetState.InitialiseFleet;
             return;
         }
 
-        Animator animator = alien.GetComponent<Animator>();
-        animator.SetBool("walk", walk);
-        float currentX = alien.transform.position.x;
-        float currentY = alien.transform.position.y;
-
-        switch (direction) {
-            case FleetDirection.LeftToRight:
-                alien.transform.position = new Vector2(currentX + xSpeed, currentY);
+        for (int ix = fleetIndex; ix < fleet.Length; ix++) {
+            if (fleet[fleetIndex] != null) {
+                alien = fleet[fleetIndex];
                 break;
-
-            case FleetDirection.DownLeft:
-            case FleetDirection.DownRight:
-                alien.transform.position = new Vector2(currentX, currentY - ySpeed);
-                break;
-
-            case FleetDirection.RightToLeft:
-                alien.transform.position = new Vector2(currentX - xSpeed, currentY);
-                break;
+            } else
+            {
+                fleetIndex++;
+            }
         }
 
-        if (alien.transform.position.x < minX) {
-            minX = alien.transform.position.x;
+        if (alien != null)
+        {
+            Animator animator = alien.GetComponent<Animator>();
+            animator.SetBool("walk", walk);
+            float currentX = alien.transform.position.x;
+            float currentY = alien.transform.position.y;
+
+            switch (direction)
+            {
+                case FleetDirection.LeftToRight:
+                    alien.transform.position = new Vector2(currentX + xSpeed, currentY);
+                    break;
+
+                case FleetDirection.DownLeft:
+                case FleetDirection.DownRight:
+                    alien.transform.position = new Vector2(currentX, currentY - ySpeed);
+                    break;
+
+                case FleetDirection.RightToLeft:
+                    alien.transform.position = new Vector2(currentX - xSpeed, currentY);
+                    break;
+            }
+
+            if (alien.transform.position.x < minX)
+            {
+                minX = alien.transform.position.x;
+            }
+
+            if (alien.transform.position.x > maxX)
+            {
+                maxX = alien.transform.position.x;
+            }
+
+            if (alien.transform.position.y < minY)
+            {
+                minY = alien.transform.position.y;
+            }
         }
 
-        if (alien.transform.position.x > maxX) {
-            maxX = alien.transform.position.x;
-        }
-
-        if (alien.transform.position.y < minY) {
-            minY = alien.transform.position.y;
-        }
-
-        fleetIndex++;
-        if (fleetIndex == fleet.Length) {
+        if (lastAlien == alien || alien == null) {
             fleetIndex = 0;
+        } else {
+            fleetIndex++;
+        }
+
+        if (fleetIndex == 0) {
             walk = !walk;
 
             if (changeDirection()) {
@@ -200,10 +211,33 @@ public class FleetController : MonoBehaviour {
             }
 
             if (state != FleetState.FleetLanded) {
-                pauseCounter = 30;
+                pauseCounter = remainingAlienCount();
                 state = FleetState.MoveFleetDelay;
             }
         }
+    }
+
+    private GameObject lastAlienInFleet() {
+        for (int ix = fleet.Length - 1; ix >= 0; ix--) {
+            if (fleet[ix] != null)
+            {
+                return fleet[ix];
+            }
+        }
+        return null;
+    }
+
+    private int remainingAlienCount()
+    {
+        int count = 0;
+        foreach (GameObject alien in fleet)
+        {
+            if (alien != null)
+            {
+                count++;
+            }
+        }
+        return count;
     }
 
     private void delayFleetMove() {

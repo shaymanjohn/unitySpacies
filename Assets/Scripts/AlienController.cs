@@ -15,8 +15,4 @@ public class AlienController : MonoBehaviour
     {
         
     }
-
-    void OnTriggerEnter2D(Collider2D other) {
-        // GameManager.log("OTE2D alien controller");
-    }
 }
