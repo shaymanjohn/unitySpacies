@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
-    public GameObject playerObject;
-    public GameObject bulletObject;
+    public GameObject playerPrefab;
+    public GameObject bulletPrefab;
 
     public float minBound;
     public float maxBound;
@@ -15,9 +15,9 @@ public class PlayerController : MonoBehaviour {
     private int playerStartDelay = 180;
     
     void Start() {
-        player = Instantiate(playerObject, new Vector2(-8, -6), new Quaternion(0, 0, 0, 0));
+        player = Instantiate(playerPrefab, new Vector2(-8, -6), new Quaternion(0, 0, 0, 0));
         player.SetActive(false);
-        bullet = new Bullet(bulletObject);
+        bullet = new Bullet(bulletPrefab);
     }
 
     void Update() {

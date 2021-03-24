@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
     public static string tagAlien = "Alien";
+    public static float starSpeedMultiplier = 1.0f;
 
-    // Start is called before the first frame update
-    void Start() {
-        
+    void Start() {        
     }
 
-    // Update is called once per frame
-    void Update() {
-        
+    void Update() {        
     }
 
     public static void log(string message) {

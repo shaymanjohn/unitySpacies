@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletController : MonoBehaviour
-{
+public class BulletController : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other) {
         if (other.tag == GameManager.tagAlien) {
             Destroy(other.gameObject);

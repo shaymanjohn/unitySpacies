@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FleetController : MonoBehaviour {
-    public GameObject topAlien;
-    public GameObject midAlien;
-    public GameObject botAlien;
+    public GameObject topAlienPrefab;
+    public GameObject midAlienPrefab;
+    public GameObject botAlienPrefab;
 
     private const int alienRows = 5;
     private const int alienColumns = 11;
@@ -20,6 +20,7 @@ public class FleetController : MonoBehaviour {
     private int fleetIndex = 0;
     private int fleetRevealCounter = 0;
     private int pauseCounter;
+    private int fleetDelayCounter;
 
     private float minX = 0;
     private float maxX = 0;
@@ -32,6 +33,7 @@ public class FleetController : MonoBehaviour {
         RevealFleet,
         MoveFleet,
         MoveFleetDelay,
+        PauseBetweenFleets,
         FleetLanded
     }
 
@@ -64,20 +66,24 @@ public class FleetController : MonoBehaviour {
                 delayFleetMove();
                 break;
 
+            case FleetState.PauseBetweenFleets:
+                delayFleetAppearing();
+                break;
+
             case FleetState.FleetLanded:
                 break;
         }
     }
 
     private void initialiseFleet() {
-        int objectIndex = 0;        
+        int objectIndex = 0;
         for (float x = 0; x < alienColumns; x += 1) {
             float alienX = (x * 1.2f) - 9;
-            GameObject top  = Instantiate(topAlien, new Vector2(alienX + 0.1f, 5), new Quaternion(0, 0, 0, 0));
-            GameObject mid1 = Instantiate(midAlien, new Vector2(alienX, 4), new Quaternion(0, 0, 0, 0));
-            GameObject mid2 = Instantiate(midAlien, new Vector2(alienX, 3), new Quaternion(0, 0, 0, 0));
-            GameObject bot1 = Instantiate(botAlien, new Vector2(alienX, 2), new Quaternion(0, 0, 0, 0));
-            GameObject bot2 = Instantiate(botAlien, new Vector2(alienX, 1), new Quaternion(0, 0, 0, 0));
+            GameObject top  = Instantiate(topAlienPrefab, new Vector2(alienX + 0.1f, 5), new Quaternion(0, 0, 0, 0));
+            GameObject mid1 = Instantiate(midAlienPrefab, new Vector2(alienX, 4), new Quaternion(0, 0, 0, 0));
+            GameObject mid2 = Instantiate(midAlienPrefab, new Vector2(alienX, 3), new Quaternion(0, 0, 0, 0));
+            GameObject bot1 = Instantiate(botAlienPrefab, new Vector2(alienX, 2), new Quaternion(0, 0, 0, 0));
+            GameObject bot2 = Instantiate(botAlienPrefab, new Vector2(alienX, 1), new Quaternion(0, 0, 0, 0));
 
             fleet[objectIndex] = bot2;
             fleet[objectIndex + alienColumns] = bot1;
@@ -115,33 +121,32 @@ public class FleetController : MonoBehaviour {
     }
 
     private void moveFleet() {
-        GameObject alien = null;
-
-        GameObject lastAlien = lastAlienInFleet();
+        GameObject lastAlien = lastAlienInFleet;
         if (lastAlien == null) {
-            state = FleetState.InitialiseFleet;
+            fleetDelayCounter = 120;
+            GameManager.starSpeedMultiplier = 8.0f;
+            state = FleetState.PauseBetweenFleets;
             return;
         }
 
+        GameObject alien = null;
         for (int ix = fleetIndex; ix < fleet.Length; ix++) {
             if (fleet[fleetIndex] != null) {
                 alien = fleet[fleetIndex];
                 break;
-            } else
-            {
+            } else {
                 fleetIndex++;
             }
         }
 
-        if (alien != null)
-        {
+        if (alien != null) {
             Animator animator = alien.GetComponent<Animator>();
             animator.SetBool("walk", walk);
+
             float currentX = alien.transform.position.x;
             float currentY = alien.transform.position.y;
 
-            switch (direction)
-            {
+            switch (direction) {
                 case FleetDirection.LeftToRight:
                     alien.transform.position = new Vector2(currentX + xSpeed, currentY);
                     break;
@@ -156,18 +161,15 @@ public class FleetController : MonoBehaviour {
                     break;
             }
 
-            if (alien.transform.position.x < minX)
-            {
+            if (alien.transform.position.x < minX) {
                 minX = alien.transform.position.x;
             }
 
-            if (alien.transform.position.x > maxX)
-            {
+            if (alien.transform.position.x > maxX) {
                 maxX = alien.transform.position.x;
             }
 
-            if (alien.transform.position.y < minY)
-            {
+            if (alien.transform.position.y < minY) {
                 minY = alien.transform.position.y;
             }
         }
@@ -210,39 +212,47 @@ public class FleetController : MonoBehaviour {
             }
 
             if (state != FleetState.FleetLanded) {
-                pauseCounter = remainingAlienCount();
+                pauseCounter = remainingAlienCount;
                 state = FleetState.MoveFleetDelay;
             }
         }
     }
 
-    private GameObject lastAlienInFleet() {
-        for (int ix = fleet.Length - 1; ix >= 0; ix--) {
-            if (fleet[ix] != null)
-            {
-                return fleet[ix];
+    private GameObject lastAlienInFleet {
+        get {
+            for (int ix = fleet.Length - 1; ix >= 0; ix--) {
+                if (fleet[ix] != null) {
+                    return fleet[ix];
+                }
             }
+            return null;
         }
-        return null;
     }
 
-    private int remainingAlienCount()
-    {
-        int count = 0;
-        foreach (GameObject alien in fleet)
-        {
-            if (alien != null)
-            {
-                count++;
+    private int remainingAlienCount {
+        get {
+            int count = 0;
+            foreach (GameObject alien in fleet) {
+                if (alien != null) {
+                    count++;
+                }
             }
+            return count;
         }
-        return count;
     }
 
     private void delayFleetMove() {
         pauseCounter--;
         if (pauseCounter == 0) {
             state = FleetState.MoveFleet;
+        }
+    }
+
+    private void delayFleetAppearing() {
+        fleetDelayCounter--;
+        if (fleetDelayCounter == 0) {
+            state = FleetState.InitialiseFleet;
+            GameManager.starSpeedMultiplier = 1.0f;
         }
     }
 

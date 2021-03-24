@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class StarfieldController : MonoBehaviour {
-    public GameObject starObject;
+    public GameObject starPrefab;
 
     private const int numberOfStarsPerLayer = 100;
     private const float slowestStarSpeed = 0.012f;
@@ -12,9 +12,9 @@ public class StarfieldController : MonoBehaviour {
     void Start() {
         int index = 0;
         for (int ix = 0; ix < numberOfStarsPerLayer; ix++) {
-            stars[index++] = new Star(starObject, new Color(0.5f, 0.3f, 0.5f, 1.0f), slowestStarSpeed * 1.0f, 0.8f);
-            stars[index++] = new Star(starObject, new Color(0.3f, 0.5f, 0.5f, 1.0f), slowestStarSpeed * 2.0f, 1.0f);
-            stars[index++] = new Star(starObject, new Color(0.7f, 0.7f, 0.7f, 1.0f), slowestStarSpeed * 3.0f, 1.2f);
+            stars[index++] = new Star(starPrefab, new Color(0.5f, 0.3f, 0.5f, 1.0f), slowestStarSpeed * 1.0f, 0.8f);
+            stars[index++] = new Star(starPrefab, new Color(0.3f, 0.5f, 0.5f, 1.0f), slowestStarSpeed * 2.0f, 1.0f);
+            stars[index++] = new Star(starPrefab, new Color(0.7f, 0.7f, 0.7f, 1.0f), slowestStarSpeed * 3.0f, 1.2f);
         }
     }
 
@@ -35,7 +35,7 @@ class Star {
     private const float maxY = 7.0f;
 
     public Star(GameObject starObject, Color colour, float speed, float scale) {
-        star = GameObject.Instantiate(starObject, randomPosition(), new Quaternion(0, 0, 0, 0));
+        star = GameObject.Instantiate(starObject, randomStarPosition, new Quaternion(0, 0, 0, 0));
 
         SpriteRenderer renderer = star.GetComponent<SpriteRenderer>();
         renderer.color = colour;
@@ -47,16 +47,18 @@ class Star {
     }
 
     public void move() {
-        float updatedY = star.transform.position.y - starSpeed;
+        float updatedY = star.transform.position.y - (starSpeed * GameManager.starSpeedMultiplier);
         if (updatedY < minY) {
             updatedY += -minY + maxY;
         }
         star.transform.position = new Vector2(star.transform.position.x, updatedY);
     }
 
-    private Vector2 randomPosition() {
-        float x = Random.Range(minX, maxX);
-        float y = Random.Range(minY, maxY);
-        return new Vector2(x, y);
+    private Vector2 randomStarPosition {
+        get {
+            float x = Random.Range(minX, maxX);
+            float y = Random.Range(minY, maxY);
+            return new Vector2(x, y);
+        }
     }
 }
