@@ -176,7 +176,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 6.71602
+  orthographic size: 8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -238,8 +238,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 3611070598462416029, guid: 97268ef972a994f2683b863c959bb6da, type: 3}
   bulletPrefab: {fileID: 7593480236322084704, guid: 5f44be891524b42f4a0671c8e33418cf, type: 3}
-  minBound: -12
-  maxBound: 12
   speed: 0.12
 --- !u!4 &884350735
 Transform:

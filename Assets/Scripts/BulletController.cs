@@ -4,7 +4,16 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other) {
-        if (other.tag == GameManager.tagAlien) {
+        if (other.tag.Contains(GameManager.tagAlien)) {
+
+            if (other.tag == GameManager.tagAlienBottom) {
+                GameManager.score += 10;
+            } else if (other.tag == GameManager.tagAlienMiddle) {
+                GameManager.score += 20;
+            } else {
+                GameManager.score += 30;
+            }
+
             Destroy(other.gameObject);
             Destroy(gameObject);
         }

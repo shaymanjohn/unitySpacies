@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: -2210989998866804250}
   - component: {fileID: 316090192301074513}
   m_Layer: 0
-  m_Name: botAlien1
-  m_TagString: Alien
+  m_Name: botAlien
+  m_TagString: AlienBottom
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46,6 +46,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1

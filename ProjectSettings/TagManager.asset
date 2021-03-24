@@ -5,7 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Bullet
-  - Alien
+  - AlienBottom
+  - AlienMiddle
+  - AlienTop
   layers:
   - Default
   - TransparentFX
