@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
+
     public static string tagAlien = "Alien";
     public static float starSpeedMultiplier = 1.0f;
+    public static Rect boundsRect = new Rect(-14.0f, -8.0f, 28.0f, 16.0f);
 
-    void Start() {        
+    void Start() {
     }
 
     void Update() {        

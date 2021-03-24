@@ -202,7 +202,7 @@ public class FleetController : MonoBehaviour {
                         break;
                 }
 
-                if (minY < -3) {
+                if (minY < (GameManager.boundsRect.yMin + 3.0f)) {
                     state = FleetState.FleetLanded;
                 }
 
@@ -261,11 +261,11 @@ public class FleetController : MonoBehaviour {
             return true;
         }
 
-        if (direction == FleetDirection.LeftToRight && maxX > 8) {
+        if (direction == FleetDirection.LeftToRight && maxX > (GameManager.boundsRect.xMax - 4.0f)) {
             return true;
         }
 
-        if (direction == FleetDirection.RightToLeft && minX < -8) {
+        if (direction == FleetDirection.RightToLeft && minX < (GameManager.boundsRect.xMin + 4.0f)) {
             return true;
         }
 

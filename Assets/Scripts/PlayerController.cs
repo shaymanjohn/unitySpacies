@@ -5,9 +5,6 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
     public GameObject playerPrefab;
     public GameObject bulletPrefab;
-
-    public float minBound;
-    public float maxBound;
     public float speed;
 
     private GameObject player;
@@ -15,7 +12,7 @@ public class PlayerController : MonoBehaviour {
     private int playerStartDelay = 180;
     
     void Start() {
-        player = Instantiate(playerPrefab, new Vector2(-8, -6), new Quaternion(0, 0, 0, 0));
+        player = Instantiate(playerPrefab, new Vector2(GameManager.boundsRect.xMin + 4.0f, GameManager.boundsRect.yMin + 2.0f), new Quaternion(0, 0, 0, 0));
         player.SetActive(false);
         bullet = new Bullet(bulletPrefab);
     }
@@ -38,11 +35,11 @@ public class PlayerController : MonoBehaviour {
         float horizontalInput = Input.GetAxis("Horizontal");
         Vector3 position = player.transform.position;
         
-        if (position.x < minBound && horizontalInput < 0) {
+        if (position.x < (GameManager.boundsRect.xMin + 2.0f) && horizontalInput < 0) {
             return;
         }
         
-        if (position.x > maxBound && horizontalInput > 0) {
+        if (position.x > (GameManager.boundsRect.xMax - 4.0f) && horizontalInput > 0) {
             return;
         }
 

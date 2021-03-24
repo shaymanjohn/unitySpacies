@@ -29,11 +29,6 @@ class Star {
     private GameObject star;
     private float starSpeed;
 
-    private const float minX = -14.0f;
-    private const float maxX = 14.0f;
-    private const float minY = -10.0f;
-    private const float maxY = 7.0f;
-
     public Star(GameObject starObject, Color colour, float speed, float scale) {
         star = GameObject.Instantiate(starObject, randomStarPosition, new Quaternion(0, 0, 0, 0));
 
@@ -48,16 +43,16 @@ class Star {
 
     public void move() {
         float updatedY = star.transform.position.y - (starSpeed * GameManager.starSpeedMultiplier);
-        if (updatedY < minY) {
-            updatedY += -minY + maxY;
+        if (updatedY < GameManager.boundsRect.yMin) {
+            updatedY += GameManager.boundsRect.height;
         }
         star.transform.position = new Vector2(star.transform.position.x, updatedY);
     }
 
     private Vector2 randomStarPosition {
         get {
-            float x = Random.Range(minX, maxX);
-            float y = Random.Range(minY, maxY);
+            float x = Random.Range(GameManager.boundsRect.xMin, GameManager.boundsRect.xMax);
+            float y = Random.Range(GameManager.boundsRect.yMin, GameManager.boundsRect.yMax);
             return new Vector2(x, y);
         }
     }

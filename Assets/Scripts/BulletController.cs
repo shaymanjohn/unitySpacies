@@ -34,7 +34,7 @@ class Bullet {
             checkFire();
         } else {
             bullet.transform.position = new Vector2(bullet.transform.position.x, bullet.transform.position.y + bulletSpeed);
-            if (bullet.transform.position.y > 6.5) {
+            if (bullet.transform.position.y > GameManager.boundsRect.yMax) {
                 firing = false;
             }
         }                
