@@ -8,6 +8,7 @@ TagManager:
   - AlienBottom
   - AlienMiddle
   - AlienTop
+  - Bomb
   layers:
   - Default
   - TransparentFX

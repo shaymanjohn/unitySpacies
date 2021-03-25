@@ -378,6 +378,7 @@ MonoBehaviour:
   topAlienPrefab: {fileID: 8936393321981592063, guid: 6e8d426b037254e9da93244c6206d540, type: 3}
   midAlienPrefab: {fileID: 5188566797728062393, guid: 28990e9df9cbe44e58c326ec42417d5b, type: 3}
   botAlienPrefab: {fileID: 171357749809895131, guid: 344c0707d5936405097d6ded604b9553, type: 3}
+  bombPrefab: {fileID: 6162284649919568997, guid: 666e7385664d54c4482d76141b81841f, type: 3}
 --- !u!4 &1881906352
 Transform:
   m_ObjectHideFlags: 0
