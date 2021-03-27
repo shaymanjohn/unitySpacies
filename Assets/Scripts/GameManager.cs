@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
     public static string tagAlienBottom = "AlienBottom";
     public static string tagAlienMiddle = "AlienMiddle";
     public static string tagAlienTop = "AlienTop";
+    public static string tagBomb = "Bomb";
 
     public static float starSpeedMultiplier = 1.0f;
     public static Rect boundsRect = new Rect(-14.0f, -8.0f, 28.0f, 16.0f);

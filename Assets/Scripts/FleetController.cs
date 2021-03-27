@@ -269,6 +269,7 @@ class Alien {
     private const float xSpeed = 0.33f;
     private const float ySpeed = 0.5f;
     public bool bombing;
+    private float bombSpeed;
 
     public float x {
         get {
@@ -328,12 +329,16 @@ class Alien {
                 bomb.transform.position = new Vector2(this.x + 0.5f, this.y);
                 bomb.SetActive(true);
                 bombing = true;
+                bombSpeed = -0.1f;
+                if (Random.Range(0.0f, 1.0f) > 0.75f) {
+                    bombSpeed *= 1.66f;
+                }
             }            
         }
     }
 
     public void updateBomb() {
-        float updatedY = bomb.transform.position.y - 0.1f;
+        float updatedY = bomb.transform.position.y + bombSpeed;
         if (updatedY < GameManager.boundsRect.yMin) {
             bombing = false;
             bomb.SetActive(false);

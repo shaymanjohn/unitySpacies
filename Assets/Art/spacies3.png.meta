@@ -38,6 +38,9 @@ TextureImporter:
   - first:
       213: -1759471678578439357
     second: midAlien1
+  - first:
+      213: -8488196263048276108
+    second: base
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -422,6 +425,27 @@ TextureImporter:
       bones: []
       spriteID: 34bc8f594d91597e0800000000000000
       internalID: -1759471678578439357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: base
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 128
+        width: 48
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 477953d987ed33a80800000000000000
+      internalID: -8488196263048276108
       vertices: []
       indices: 
       edges: []
