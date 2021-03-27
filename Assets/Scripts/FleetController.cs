@@ -57,23 +57,28 @@ public class FleetController : MonoBehaviour {
 
             case FleetState.MoveFleet:
                 moveFleet();
+                updateBombs();
                 break;
 
             case FleetState.MoveFleetDelay:
                 delayFleetMove();
+                updateBombs();
                 break;
 
             case FleetState.PauseBetweenFleets:
                 delayFleetAppearing();
+                updateBombs();
                 break;
 
             case FleetState.FleetLanded:
+                updateBombs();
                 break;
-        }
+        }        
     }
 
     private void initialiseFleet() {
         int objectIndex = 0;
+        Alien.bombPrefab = bombPrefab;
         for (float x = 0; x < alienColumns; x += 1) {
             float alienX = (x * 1.2f) - 9;
             Alien top  = new Alien(topAlienPrefab, new Vector2(alienX + 0.1f, 5));
@@ -190,6 +195,14 @@ public class FleetController : MonoBehaviour {
         }
     }
 
+    private void updateBombs() {
+        foreach (Alien alien in fleet) {
+            if (alien.bombing) {
+                alien.updateBomb();
+            }
+        }
+    }
+
     private Alien lastAlienInFleet {
         get {
             for (int ix = fleet.Length - 1; ix >= 0; ix--) {
@@ -248,9 +261,14 @@ public class FleetController : MonoBehaviour {
 }
 
 class Alien {
+    public static GameObject bombPrefab;
+
     private GameObject alien;
+    private GameObject bomb;
+
     private const float xSpeed = 0.33f;
     private const float ySpeed = 0.5f;
+    public bool bombing;
 
     public float x {
         get {
@@ -267,6 +285,9 @@ class Alien {
     public Alien(GameObject alienPrefab, Vector2 position) {
         alien = GameObject.Instantiate(alienPrefab, position, new Quaternion(0, 0, 0, 0));
         alien.SetActive(false);
+        bomb = GameObject.Instantiate(bombPrefab, position, new Quaternion(0, 0, 0, 0));
+        bomb.SetActive(false);
+        bombing = false;
     }
 
     public void activate() {
@@ -300,6 +321,24 @@ class Alien {
             case FleetDirection.RightToLeft:
                 alien.transform.position = new Vector2(currentX - xSpeed, currentY);
                 break;
+        }
+
+        if (!bombing) {
+            if (Random.Range(0.0f, 1.0f) > 0.96f) {
+                bomb.transform.position = new Vector2(this.x + 0.5f, this.y);
+                bomb.SetActive(true);
+                bombing = true;
+            }            
+        }
+    }
+
+    public void updateBomb() {
+        float updatedY = bomb.transform.position.y - 0.1f;
+        if (updatedY < GameManager.boundsRect.yMin) {
+            bombing = false;
+            bomb.SetActive(false);
+        } else {
+            bomb.transform.position = new Vector2(bomb.transform.position.x, updatedY);
         }
     }
 }
