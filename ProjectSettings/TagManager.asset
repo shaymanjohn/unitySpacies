@@ -9,6 +9,7 @@ TagManager:
   - AlienMiddle
   - AlienTop
   - Bomb
+  - Base
   layers:
   - Default
   - TransparentFX
