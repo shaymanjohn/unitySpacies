@@ -50,14 +50,21 @@ public class BaseController : MonoBehaviour {
 
     public void hasBombHitBase(GameObject baseObject, GameObject bomb) {
         for (int ix = 0; ix < bases.Length; ix++) {
-            if (bases[ix].gameObject == baseObject) {
-                GameManager.log("Bomb hit base: " + ix);
-                //
-                // Convert bomb position into base coordinates.
-                // Check if any of that area is solid.
-                // If yes, kill bomb and remove pixels, update solid array.
-                //
-                return;
+            if (bases[ix].gameObject == baseObject) {                
+                Bounds baseBounds = baseObject.GetComponent<SpriteRenderer>().bounds;
+                float basex = baseBounds.center.x - (baseBounds.size.x / 2.0f);
+                float basey = baseBounds.center.y - (baseBounds.size.y / 2.0f);
+
+                Bounds bombBounds = bomb.GetComponent<SpriteRenderer>().bounds;
+                float bombx = bombBounds.center.x - (bombBounds.size.x / 2.0f);
+                float bomby = bombBounds.center.y - (bombBounds.size.y / 2.0f);
+
+                float percentxMin = (bombx - basex) / (baseBounds.size.x);
+                float percentxMax = ((bombx + bombBounds.size.x) - basex) / (baseBounds.size.x);
+                float percentyMin = (bomby - basey) / (baseBounds.size.y);
+                float percentyMax = ((bomby + bombBounds.size.y) - basey) / (baseBounds.size.y);               
+
+                GameManager.log("BOOM!");
             }
         }
     }

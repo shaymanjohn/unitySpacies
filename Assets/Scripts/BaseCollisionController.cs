@@ -15,6 +15,7 @@ public class BaseCollisionController : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other) {
         if (other.tag.Contains(GameManager.tagBomb)) {
+            Collider2D col2d = gameObject.GetComponent<Collider2D>();
             baseController.hasBombHitBase(gameObject, other.gameObject);
         }
     }
